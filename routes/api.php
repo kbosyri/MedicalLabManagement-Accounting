@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
+
+Route::post('/createfunctionalaccount',[Organization_deptsController::class,'creatfunctionalaccount']);
+ Route::post('/updatefunctionalaccount/{id}',[OrganizationController::class,'updatefunctionalaccount']);
