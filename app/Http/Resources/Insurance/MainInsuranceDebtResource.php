@@ -2,11 +2,12 @@
 
 namespace App\Http\Resources\Insurance;
 
+use App\Http\Resources\Organization\MainOrganizationDebtOrganizationResource;
 use App\Models\InsuranceDebt;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InsuranceDebtResource extends JsonResource
+class MainInsuranceDebtResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,9 +22,10 @@ class InsuranceDebtResource extends JsonResource
         return [
             'id'=>$this->id,
             'amount'=>$this->amount,
-            'is_paid'=>$this->is_paid,
             'date'=>$this->date,
-            'created_at'=>$this->created_at
+            'is_paid'=>$this->is_paid,
+            'created_at'=>$this->created_at,
+            'organization'=>new MainOrganizationDebtOrganizationResource($this->organization),
         ];
     }
 }

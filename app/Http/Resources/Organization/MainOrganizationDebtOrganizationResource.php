@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Organization;
 
-use App\Models\OrganizationDebt;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationDebtResource extends JsonResource
+class MainOrganizationDebtOrganizationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +14,13 @@ class OrganizationDebtResource extends JsonResource
      * @return array<string, mixed>
      */
 
-    protected $collects = OrganizationDebt::class;
+    protected $collects = Organization::class;
 
     public function toArray(Request $request): array
     {
         return [
             'id'=>$this->id,
-            'amount'=>$this->amount,
-            'is_paid'=>$this->is_paid,
-            'date'=>$this->date,
-            'created_at'=>$this->created_at,
+            'name'=>$this->name,
         ];
     }
 }

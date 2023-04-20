@@ -5,20 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\OrganizationDebt;
 use Illuminate\Http\Request;
 use App\Http\Resources\Functionalaccount;
+use App\Http\Resources\Organization\MainOrganizationDebtResource;
+use App\Http\Resources\Organization\OrganizationDebtResource;
+use App\Http\Resources\Organization\OrganizationResource;
+use App\Models\Organization;
+
 use function PHPUnit\Framework\returnSelf;
 
 class Organization_deptsController extends Controller
 {
 
-
-    public function allaccounts(){
-        $funaccount=OrganizationDebt::all();
+    public function GetAllOrganizationDebts()
+    {
+        $funaccount = OrganizationDebt::all();
        if($funaccount->count() >0){
-        return  Functionalaccount::collection($funaccount);
+        return  OrganizationDebtResource::collection($funaccount);
        }
        else{
         return  response()->json([
-            'message'=>'لا يوجد حسابات مالية '
+            'message'=>'لا يوجد ديون مالية '
               ],500);
        }
 
@@ -27,31 +32,70 @@ class Organization_deptsController extends Controller
     }
 
 
-public function createfunctionalaccount(Request $request){
-$funaccount=new OrganizationDebt();
-$funaccount->organization_id=$request->organization_id;
-$funaccount->amount=$request->amount;
-$funaccount->date=$request->date;
-$funaccount->save();
+    public function AddOrganizationDebt(Request $request)
+    {
 
-return response()->json([
-    'message'=>'تم انشأ الحساب بنجاح',
-      ],500); new Functionalaccount($funaccount); 
+        $funaccount = new OrganizationDebt();
 
-}
+        $funaccount->organization_id=$request->organization_id;
+        $funaccount->amount=$request->amount;
+        $funaccount->date=$request->date;
+
+        $funaccount->save();
+
+        return response()->json([
+            'message'=>'تم انشأ الحساب بنجاح',
+            'debt'=>new OrganizationDebtResource($funaccount)
+              ]); 
+
+    }
 
 
 
-public function updatefunctionalaccount (Request $request,$id){
-    $funaccount=OrganizationDebt::find($id);
-    $funaccount=new OrganizationDebt();
-$funaccount->organization_id=$request->organization_id;
-$funaccount->amount=$request->amount;
-$funaccount->date=$request->date;
-$funaccount->save();
-return response()->json([
-    'message'=>'تم تعديل معلومات الحساب بنجاح',
-      ],500); new Functionalaccount($funaccount); 
+    public function UpdateOrganizationDebt(Request $request,$id)
+    {
 
-}
+        $funaccount = OrganizationDebt::find($id);
+
+        $funaccount->organization_id=$request->organization_id;
+        $funaccount->amount=$request->amount;
+        $funaccount->date=$request->date;
+
+        $funaccount->save();
+
+        return response()->json([
+        'message'=>'تم تعديل معلومات الحساب بنجاح',
+        'debt'=> new OrganizationDebtResource($funaccount)
+          ]);
+
+    }
+
+    public function PayOrganizationDebt($id)
+    {
+        $debt = OrganizationDebt::find($id);
+
+        $debt->is_paid = true;
+
+        $debt->save();
+
+        return response()->json([
+            'message'=>'تم دفع الدين',
+            'debt'=>new OrganizationDebt($debt),
+        ]);
+
+    }
+
+    public function GetUnpaidDebts($id)
+    {
+        $debts = OrganizationDebt::where('organization_id',$id)->where('is_paid',false)->get();
+
+        return MainOrganizationDebtResource::collection($debts);
+    }
+
+    public function GetOrganizationDebts($id)
+    {
+        $debts = OrganizationDebt::where('organization_id',$id)->get();
+
+        return MainOrganizationDebtResource::collection($debts);
+    }
 }
