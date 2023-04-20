@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     use HasFactory;
+
+    public function depts()
+    {
+        return $this->hasMany(OrganizationDebt::class,'organization_id','id');
+    }
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Insurance extends Model
 {
     use HasFactory;
+
+    public function debts()
+    {
+        return $this->hasMany(InsuranceDebt::class,'insurance_id','id');
+    }
 }
