@@ -45,7 +45,7 @@ class Organization_deptsController extends Controller
 
         return response()->json([
             'message'=>'تم انشأ الحساب بنجاح',
-            'debt'=>new OrganizationDebtResource($funaccount)
+            'debt'=>new MainOrganizationDebtResource($funaccount)
               ]); 
 
     }
@@ -65,7 +65,7 @@ class Organization_deptsController extends Controller
 
         return response()->json([
         'message'=>'تم تعديل معلومات الحساب بنجاح',
-        'debt'=> new OrganizationDebtResource($funaccount)
+        'debt'=> new MainOrganizationDebtResource($funaccount)
           ]);
 
     }
