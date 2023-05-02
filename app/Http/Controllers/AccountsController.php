@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountAddRequest;
 use App\Http\Resources\Insurance\InsuranceResource;
 use App\Http\Resources\Organization\OrganizationResource;
 use App\Models\Insurance;
@@ -10,11 +11,14 @@ use Illuminate\Http\Request;
 
 class AccountsController extends Controller
 {
-    public function AddInsurance(Request $request)
+    public function AddInsurance(AccountAddRequest $request)
     {
         $new = new Insurance();
 
         $new->name = $request->name;
+        $new->address = $request->address;
+        $new->phone = $request->phone;
+        $new->email = $request->email;
 
         $new->save();
 
@@ -24,11 +28,14 @@ class AccountsController extends Controller
         ]);
     }
 
-    public function AddOrganization(Request $request)
+    public function AddOrganization(AccountAddRequest $request)
     {
         $new = new Organization();
 
         $new->name = $request->name;
+        $new->address = $request->address;
+        $new->phone = $request->phone;
+        $new->email = $request->email;
 
         $new->save();
 
