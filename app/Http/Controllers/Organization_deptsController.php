@@ -70,6 +70,13 @@ class Organization_deptsController extends Controller
 
     }
 
+    public function payDebts(Request $request)
+    {
+        $tests = OrganizationDebt::whereIn('id',$request->organization_debts)->update(['is_paid'=>true])->get();
+
+        return MainOrganizationDebtResource::collection($tests);
+    }
+
     public function PayOrganizationDebt($id)
     {
         $debt = OrganizationDebt::find($id);

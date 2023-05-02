@@ -40,6 +40,13 @@ class InsuranceDebtController extends Controller
         ]);
     }
 
+    public function payDebts(Request $request)
+    {
+        $tests = InsuranceDebt::whereIn('id',$request->insurance_debts)->update(['is_paid'=>true])->get();
+
+        return MainInsuranceDebtResource::collection($tests);
+    }
+
     public function GetInsuranceDebts($id)
     {
         $debts = InsuranceDebt::where('insurance_id',$id)->get();
