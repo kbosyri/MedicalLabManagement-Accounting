@@ -19,7 +19,7 @@ class Organization_deptsController extends Controller
     {
         $funaccount = OrganizationDebt::all();
        if($funaccount->count() >0){
-        return  OrganizationDebtResource::collection($funaccount);
+        return  MainOrganizationDebtResource::collection($funaccount);
        }
        else{
         return  response()->json([
@@ -88,7 +88,7 @@ class Organization_deptsController extends Controller
 
         return response()->json([
             'message'=>'تم دفع الدين',
-            'debt'=>new OrganizationDebt($debt),
+            'debt'=>new MainOrganizationDebtResource($debt),
         ]);
 
     }
