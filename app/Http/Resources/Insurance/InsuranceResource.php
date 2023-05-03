@@ -21,6 +21,9 @@ class InsuranceResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'address'=>$this->address,
+            'phone'=>$this->phone,
+            'email'=>$this->email,
             'depts'=>InsuranceDebtResource::collection($this->debts),
         ];
     }

@@ -24,8 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/insurances',[AccountsController::class,'AddInsurance']);
     Route::post('/insurances/debts',[InsuranceDebtController::class,'AddInsuranceDebt']);
-    Route::post('/insurance/debts/{id}/update',[InsuranceDebtController::class,'UpdateInsuranceDebt']);
-    Route::post('/insurance/debts/pay',[InsuranceDebtController::class,'payDebts']);
+    Route::post('/insurances/debts/{id}/update',[InsuranceDebtController::class,'UpdateInsuranceDebt']);
+    Route::post('/insurances/debts/pay',[InsuranceDebtController::class,'payDebts']);
     Route::post('/organizations',[AccountsController::class,'AddOrganization']);
     Route::post('/organizations/debts',[Organization_deptsController::class,'AddOrganizationDebt']);
     Route::post('/organizations/debts/{id}/update',[Organization_deptsController::class,'UpdateOrganizationDebt']);

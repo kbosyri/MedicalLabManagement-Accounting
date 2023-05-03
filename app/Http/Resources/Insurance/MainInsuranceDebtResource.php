@@ -25,7 +25,7 @@ class MainInsuranceDebtResource extends JsonResource
             'date'=>$this->date,
             'is_paid'=>$this->is_paid,
             'created_at'=>$this->created_at,
-            'organization'=>new MainOrganizationDebtOrganizationResource($this->organization),
+            'insurance'=>new MainInsuranceDebtInsuranceResource($this->insurance),
         ];
     }
 }

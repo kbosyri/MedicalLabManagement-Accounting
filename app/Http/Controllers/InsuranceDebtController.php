@@ -28,7 +28,6 @@ class InsuranceDebtController extends Controller
     {
         $debt = InsuranceDebt::find($id);
 
-        $debt->insurance_id = $request->insurance_id;
         $debt->amount = $request->amount;
         $debt->date = $request->date;
 
@@ -42,7 +41,9 @@ class InsuranceDebtController extends Controller
 
     public function payDebts(Request $request)
     {
-        $tests = InsuranceDebt::whereIn('id',$request->insurance_debts)->update(['is_paid'=>true])->get();
+        InsuranceDebt::whereIn('id',$request->insurance_debts)->update(['is_paid'=>true]);
+
+        $tests = InsuranceDebt::whereIn('id',$request->insurance_debts)->get();
 
         return MainInsuranceDebtResource::collection($tests);
     }

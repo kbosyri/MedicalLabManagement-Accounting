@@ -57,7 +57,6 @@ class Organization_deptsController extends Controller
 
         $funaccount = OrganizationDebt::find($id);
 
-        $funaccount->organization_id=$request->organization_id;
         $funaccount->amount=$request->amount;
         $funaccount->date=$request->date;
 
@@ -72,7 +71,9 @@ class Organization_deptsController extends Controller
 
     public function payDebts(Request $request)
     {
-        $tests = OrganizationDebt::whereIn('id',$request->organization_debts)->update(['is_paid'=>true])->get();
+        OrganizationDebt::whereIn('id',$request->organization_debts)->update(['is_paid'=>true]);
+        
+        $tests = OrganizationDebt::whereIn('id',$request->organization_debts)->get();
 
         return MainOrganizationDebtResource::collection($tests);
     }

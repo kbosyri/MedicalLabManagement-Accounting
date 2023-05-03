@@ -9,7 +9,7 @@ class Organization extends Model
 {
     use HasFactory;
 
-    public function depts()
+    public function debts()
     {
         return $this->hasMany(OrganizationDebt::class,'organization_id','id');
     }
