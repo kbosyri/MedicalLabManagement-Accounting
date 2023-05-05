@@ -26,9 +26,6 @@ class Organization_deptsController extends Controller
             'message'=>'لا يوجد ديون مالية '
               ],500);
        }
-
-    
-
     }
 
 
