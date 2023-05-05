@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AccountAddRequest;
 use App\Http\Resources\Insurance\InsuranceResource;
 use App\Http\Resources\Organization\OrganizationResource;
+use App\Http\Resources\Patients\PatientResource;
 use App\Models\Insurance;
 use App\Models\Organization;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class AccountsController extends Controller
@@ -86,6 +88,13 @@ class AccountsController extends Controller
         return OrganizationResource::collection($orgs);
     }
 
+    public function GetAllPatients()
+    {
+        $patients = Patient::all();
+
+        return PatientResource::collection($patients);
+    }
+
     public function GetAllInsurance()
     {
         $insurances = Insurance::all();
@@ -105,5 +114,12 @@ class AccountsController extends Controller
         $insurance = Insurance::find($id);
 
         return new InsuranceResource($insurance);
+    }
+
+    public function GetPatient($id)
+    {
+        $patient = Patient::find($id);
+
+        return new PatientResource($patient);
     }
 }
