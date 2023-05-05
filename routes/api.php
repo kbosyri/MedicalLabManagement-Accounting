@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/patients/debts',[PatientDebtsController::class,'GetAllDebts']);
     Route::get('/patients/{id}/debts',[PatientDebtsController::class,'GetPatientDebts']);
     Route::get('/patients/{id}/debts/unpaid',[PatientDebtsController::class,'GetUnpaidPatientDebts']);
-    Route::get('/patient/{id}',[AccountsController::class,'GetPatient']);
+    Route::get('/patients/{id}',[AccountsController::class,'GetPatient']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
