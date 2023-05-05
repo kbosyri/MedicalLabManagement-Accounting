@@ -56,7 +56,7 @@ class PatientDebtsController extends Controller
         return MainPatientDebtResource::collection($debts);
     }
 
-    public function GetUnpaidInsuranceDebts($id)
+    public function GetUnpaidPatientDebts($id)
     {
         $debts = PatientDebt::where('patient_id',$id)->where('is_paid',false)->get();
 

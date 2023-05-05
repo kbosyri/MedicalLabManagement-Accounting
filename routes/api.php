@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
+use App\Http\Controllers\PatientDebtsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,10 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/organizations/debts/pay',[Organization_deptsController::class,'payDebts']);
     Route::post('/organziations/{id}',[AccountsController::class,'UpdateOrganization']);
 
+    Route::post('/patients/debts',[PatientDebtsController::class,'AddPatientDebt']);
+    Route::post('/patients/debts/{id}/update',[PatientDebtsController::class,'UpdatePatientDebt']);
+    Route::post('/patients/debts/pay',[PatientDebtsController::class,'PayDebts']);
+
     Route::get('/insurances',[AccountsController::class,'GetAllInsurance']);
     Route::get('/insurances/debts',[InsuranceDebtController::class,'GetAllDebts']);
     Route::get('/insurances/{id}/debts',[InsuranceDebtController::class,'GetInsuranceDebts']);
@@ -45,6 +50,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/organizations/{id}/debts',[Organization_deptsController::class,'GetOrganizationDebts']);
     Route::get('/organizations/{id}/debts/unpaid',[Organization_deptsController::class,'GetUnpaidDebts']);
     Route::get('/organizations/{id}',[AccountsController::class,'GetOrganization']);
+
+    Route::get('/patients',[AccountsController::class,'GetAllPatients']);
+    Route::get('/patients/debts',[PatientDebtsController::class,'GetAllDebts']);
+    Route::get('/patients/{id}/debts',[PatientDebtsController::class,'GetPatientDebts']);
+    Route::get('/patients/{id}/debts/unpaid',[PatientDebtsController::class,'GetUnpaidPatientDebts']);
+    Route::get('/patient/{id}',[AccountsController::class,'GetPatient']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
