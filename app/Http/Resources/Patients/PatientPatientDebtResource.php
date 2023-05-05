@@ -18,6 +18,7 @@ class PatientPatientDebtResource extends JsonResource
             'id'=>$this->id,
             'amount'=>$this->amount,
             'date'=>$this->date,
+            'is_paid'=>$this->is_paid,
         ];
     }
 }
