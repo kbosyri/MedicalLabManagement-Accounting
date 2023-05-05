@@ -26,16 +26,20 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/insurances/debts',[InsuranceDebtController::class,'AddInsuranceDebt']);
     Route::post('/insurances/debts/{id}/update',[InsuranceDebtController::class,'UpdateInsuranceDebt']);
     Route::post('/insurances/debts/pay',[InsuranceDebtController::class,'payDebts']);
+    Route::post('/insurances/{id}',[AccountsController::class,'UpdateInsurance']);
+
     Route::post('/organizations',[AccountsController::class,'AddOrganization']);
     Route::post('/organizations/debts',[Organization_deptsController::class,'AddOrganizationDebt']);
     Route::post('/organizations/debts/{id}/update',[Organization_deptsController::class,'UpdateOrganizationDebt']);
     Route::post('/organizations/debts/pay',[Organization_deptsController::class,'payDebts']);
+    Route::post('/organziations/{id}',[AccountsController::class,'UpdateOrganization']);
 
     Route::get('/insurances',[AccountsController::class,'GetAllInsurance']);
     Route::get('/insurances/debts',[InsuranceDebtController::class,'GetAllDebts']);
     Route::get('/insurances/{id}/debts',[InsuranceDebtController::class,'GetInsuranceDebts']);
     Route::get('/insurances/{id}/debts/unpaid',[InsuranceDebtController::class,'GetUnpaidInsuranceDebts']);
     Route::get('/insurances/{id}',[AccountsController::class,'GetInsurance']);
+    
     Route::get('/organizations',[AccountsController::class,'GetAllOrganizations']);
     Route::get('/organizations/debts',[Organization_deptsController::class,'GetAllOrganizationDebts']);
     Route::get('/organizations/{id}/debts',[Organization_deptsController::class,'GetOrganizationDebts']);

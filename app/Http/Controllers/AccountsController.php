@@ -45,6 +45,40 @@ class AccountsController extends Controller
         ]);
     }
 
+    public function UpdateOrganization(Request $request, $id)
+    {
+        $organization = Organization::find($id);
+
+        $organization->name = $request->name;
+        $organization->address = $request->address;
+        $organization->phone = $request->phone;
+        $organization->email = $request->email;
+
+        $organization->save();
+
+        return response()->json([
+            'message'=>'تم تعديل حساب الجمعية بنجاح',
+            'account'=>new OrganizationResource($organization),
+        ]);
+    }
+
+    public function UpdateInsurance(Request $request, $id)
+    {
+        $insurance = Insurance::find($id);
+
+        $insurance->name = $request->name;
+        $insurance->address = $request->address;
+        $insurance->phone = $request->phone;
+        $insurance->email = $request->email;
+
+        $insurance->save();
+
+        return response()->json([
+            'message'=>'تم تعديل حساب التأمين بنجاح',
+            'account'=>new InsuranceResource($insurance),
+        ]);
+    }
+
     public function GetAllOrganizations()
     {
         $orgs = Organization::all();
