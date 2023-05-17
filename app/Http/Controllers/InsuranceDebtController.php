@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Insurance\MainInsuranceDebtResource;
+use App\Models\Insurance;
 use App\Models\InsuranceDebt;
 use Illuminate\Http\Request;
 
@@ -67,5 +68,12 @@ class InsuranceDebtController extends Controller
         $debts = InsuranceDebt::all();
 
         return MainInsuranceDebtResource::collection($debts);
+    }
+
+    public function GetDebt($id)
+    {
+        $debt = InsuranceDebt::find($id);
+
+        return new MainInsuranceDebtResource($debt);
     }
 }

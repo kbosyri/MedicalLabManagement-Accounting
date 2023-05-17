@@ -103,4 +103,11 @@ class Organization_deptsController extends Controller
 
         return MainOrganizationDebtResource::collection($debts);
     }
+
+    public function GetDebt($id)
+    {
+        $debt = OrganizationDebt::find($id);
+
+        return new MainOrganizationDebtResource($debt);
+    }
 }

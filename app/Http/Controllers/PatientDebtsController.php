@@ -69,4 +69,11 @@ class PatientDebtsController extends Controller
 
         return MainPatientDebtResource::collection($debts);
     }
+
+    public function GetDebt($id)
+    {
+        $debt = PatientDebt::find($id);
+
+        return new MainPatientDebtResource($debt);
+    }
 }
