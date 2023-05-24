@@ -15,6 +15,18 @@ use function PHPUnit\Framework\returnSelf;
 class Organization_deptsController extends Controller
 {
 
+    private static function Find($id,$array)
+    {
+        foreach($array as $value)
+        {
+            if($id == $value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function GetAllOrganizationDebts()
     {
         $funaccount = OrganizationDebt::all();
@@ -109,5 +121,23 @@ class Organization_deptsController extends Controller
         $debt = OrganizationDebt::find($id);
 
         return new MainOrganizationDebtResource($debt);
+    }
+
+    public function GetIndebtedOrganizations()
+    {
+        $debts = OrganizationDebt::where('is_paid',false)->get();
+        $organizations_id = [];
+
+        foreach($debts as $debt)
+        {
+            if(Organization_deptsController::Find($debt->organization_id,$organizations_id))
+            {
+                array_push($organizations_id,$debt->organization_id);
+            }
+        }
+
+        $organizations = Organization::whereIn('id',$organizations_id)->get();
+
+        return OrganizationResource::collection($organizations);
     }
 }

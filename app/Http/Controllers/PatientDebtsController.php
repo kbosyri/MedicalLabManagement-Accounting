@@ -3,11 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Patients\MainPatientDebtResource;
+use App\Http\Resources\Patients\PatientResource;
+use App\Models\Patient;
 use App\Models\PatientDebt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PatientDebtsController extends Controller
 {
+    private static function Find($id,$array)
+    {
+        foreach($array as $value)
+        {
+            if($id == $value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function AddPatientDebt(Request $request)
     {
         $new = new PatientDebt();
@@ -75,5 +90,23 @@ class PatientDebtsController extends Controller
         $debt = PatientDebt::find($id);
 
         return new MainPatientDebtResource($debt);
+    }
+
+    public function GetIndebtedPatients()
+    {
+        $debts = PatientDebt::where('is_paid',false)->get();
+        $patients_id = [];
+
+        foreach($debts as $debt)
+        {
+            if(PatientDebtsController::Find($debt->patient_id,$patients_id))
+            {
+                array_push($patients_id,$debt->patient_id);
+            }
+        }
+
+        $patients = Patient::whereIn('id',$patients_id)->get();
+
+        return PatientResource::collection($patients);
     }
 }

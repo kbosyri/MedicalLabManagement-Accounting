@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Insurance\InsuranceResource;
 use App\Http\Resources\Insurance\MainInsuranceDebtResource;
 use App\Models\Insurance;
 use App\Models\InsuranceDebt;
@@ -9,6 +10,19 @@ use Illuminate\Http\Request;
 
 class InsuranceDebtController extends Controller
 {
+
+    private static function Find($id,$array)
+    {
+        foreach($array as $value)
+        {
+            if($id == $value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function AddInsuranceDebt(Request $request)
     {
         $debt = new InsuranceDebt();
@@ -75,5 +89,23 @@ class InsuranceDebtController extends Controller
         $debt = InsuranceDebt::find($id);
 
         return new MainInsuranceDebtResource($debt);
+    }
+
+    public function GetIndebtedInsurances()
+    {
+        $debts = InsuranceDebt::where('is_paid',false)->get();
+        $insurances_id = [];
+
+        foreach($debts as $debt)
+        {
+            if(InsuranceDebtController::Find($debt->insurance_id,$insurances_id))
+            {
+                array_push($insurances_id,$debt->insurance_id);
+            }
+        }
+
+        $insurances = Insurance::whereIn('id',$insurances_id)->get();
+
+        return InsuranceResource::collection($insurances);
     }
 }
