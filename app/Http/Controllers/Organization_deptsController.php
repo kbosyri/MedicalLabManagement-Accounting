@@ -130,7 +130,7 @@ class Organization_deptsController extends Controller
 
         foreach($debts as $debt)
         {
-            if(Organization_deptsController::Find($debt->organization_id,$organizations_id))
+            if(!Organization_deptsController::Find($debt->organization_id,$organizations_id))
             {
                 array_push($organizations_id,$debt->organization_id);
             }

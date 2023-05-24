@@ -99,7 +99,7 @@ class PatientDebtsController extends Controller
 
         foreach($debts as $debt)
         {
-            if(PatientDebtsController::Find($debt->patient_id,$patients_id))
+            if(!PatientDebtsController::Find($debt->patient_id,$patients_id))
             {
                 array_push($patients_id,$debt->patient_id);
             }

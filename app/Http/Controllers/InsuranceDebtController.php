@@ -98,7 +98,7 @@ class InsuranceDebtController extends Controller
 
         foreach($debts as $debt)
         {
-            if(InsuranceDebtController::Find($debt->insurance_id,$insurances_id))
+            if(!InsuranceDebtController::Find($debt->insurance_id,$insurances_id))
             {
                 array_push($insurances_id,$debt->insurance_id);
             }
