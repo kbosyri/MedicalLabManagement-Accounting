@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
 use App\Http\Controllers\PatientDebtsController;
@@ -62,6 +63,13 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/patients/{id}/debts/unpaid',[PatientDebtsController::class,'GetUnpaidPatientDebts']);
     Route::get('/patients/debts/{id}',[PatientDebtsController::class,'GetDebt']);
     Route::get('/patients/{id}',[AccountsController::class,'GetPatient']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/expenses',[ExpenseController::class,'AddExpense']);
+    Route::middleware('check-auth')->get('/expenses',[ExpenseController::class,'GetExpenses']);
+    Route::get('/expenses/reports',[ExpenseController::class,'GetExpensesBetweenDates']);
+    Route::middleware('check-auth')->get('/expenses/{id}',[ExpenseController::class,'GetExpense']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
