@@ -18,4 +18,9 @@ class Staff extends Authenticatable
 
     protected $hidden = ['password','remember_token'];
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class,'role_id','id');
+    }
+
 }
