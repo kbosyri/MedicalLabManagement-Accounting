@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/staff/{id}',[StaffSalaryController::class,'UpdateStaffSalary']);
+    Route::post('/staff/{id}/salary',[StaffSalaryController::class,'UpdateStaffSalary']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
