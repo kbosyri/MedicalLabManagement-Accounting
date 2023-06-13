@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
 use App\Http\Controllers\PatientDebtsController;
+use App\Http\Controllers\StaffSalaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::middleware('check-auth')->get('/expenses',[ExpenseController::class,'GetExpenses']);
     Route::get('/expenses/reports',[ExpenseController::class,'GetExpensesBetweenDates']);
     Route::middleware('check-auth')->get('/expenses/{id}',[ExpenseController::class,'GetExpense']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/staff/{id}',[StaffSalaryController::class,'UpdateStaffSalary']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
