@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Salary\SalaryUpdateRequest;
 use App\Http\Resources\StaffResource;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class StaffSalaryController extends Controller
 {
-    public function UpdateStaffSalary(Request $request,$id)
+    public function UpdateStaffSalary(SalaryUpdateRequest $request,$id)
     {
         $staff = Staff::find($id);
 
