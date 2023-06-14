@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
 use App\Http\Controllers\PatientDebtsController;
+use App\Http\Controllers\PunishmentsController;
 use App\Http\Controllers\RewardsController;
 use App\Http\Controllers\StaffSalaryController;
 use Illuminate\Http\Request;
@@ -85,6 +86,15 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/rewards',[RewardsController::class,'GetAllRewards']);
     Route::get('/rewards/report',[RewardsController::class,'RewardsReport']);
     Route::get('/rewards/{id}',[RewardsController::class,'GetReward']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/punishments',[PunishmentsController::class,'AddPunishment']);
+    Route::post('/punishments/{id}',[PunishmentsController::class,'UpdatePunishment']);
+    Route::get('/staff/{id}/punishments',[PunishmentsController::class,'GetPunishmentsForStaff']);
+    Route::get('/punishments',[PunishmentsController::class,'GetAllPunishments']);
+    Route::get('/punishments/report',[PunishmentsController::class,'PunishmentsReport']);
+    Route::get('/punishments/{id}',[PunishmentsController::class,'GetPunishment']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
