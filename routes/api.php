@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
 use App\Http\Controllers\PatientDebtsController;
+use App\Http\Controllers\RewardsController;
 use App\Http\Controllers\StaffSalaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,15 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/staff/{id}/salary',[StaffSalaryController::class,'UpdateStaffSalary']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/rewards',[RewardsController::class,'AddReward']);
+    Route::post('/rewards/{id}',[RewardsController::class,'UpdateReward']);
+    Route::get('/staff/{id}/rewards',[RewardsController::class,'GetRewardsForStaff']);
+    Route::get('/rewards',[RewardsController::class,'GetAllRewards']);
+    Route::get('/rewards/report',[RewardsController::class,'RewardsReport']);
+    Route::get('/rewards/{id}',[RewardsController::class,'GetReward']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);

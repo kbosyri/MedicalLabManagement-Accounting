@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class StaffResource extends JsonResource
+class RewardStaffResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -37,7 +37,6 @@ class StaffResource extends JsonResource
             'is_active'=>$active,
             'is_staff'=>true,
             'role'=>new StaffRoleResource($this->role),
-            'rewards'=>StaffRewardResource::collection($this->rewards),
         ];
     }
 }

@@ -23,4 +23,9 @@ class Staff extends Authenticatable
         return $this->belongsTo(Role::class,'role_id','id');
     }
 
+    public function rewards()
+    {
+        return $this->hasMany(Reward::class,'staff_id','id');
+    }
+
 }
