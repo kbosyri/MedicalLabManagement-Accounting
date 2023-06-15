@@ -20,7 +20,7 @@ class GetBalance
         $balance = [];
         $balance['profit'] = GetBalance::GetProfit($request,$from_date,$to_date);
         $balance['lose'] = GetBalance::GetLoses($request,$from_date,$to_date);
-        $balance['balance'] = $balance['profit'] + $balance['lose'];
+        $balance['balance'] = $balance['profit']['total_profit'] - $balance['lose']['total_loses'];
 
         return $balance;
     }
@@ -43,18 +43,18 @@ class GetBalance
     public static function GetPatientTestsProfit(Request $request,$from_date,$to_date)
     {
         $profit = 0;
-        $tests = Http::withToken($request->bearerToken())->get("http://localhost:8000/api/reports/patients/tests",[
+        $tests = Http::withToken($request->bearerToken())->withBody(json_encode([
             'start_date'=>$from_date,
-            "end_date"=>$to_date
-        ]);
+            'end_date'=>$to_date
+        ]),"application/json")->get("http://localhost:8000/api/reports/patients/tests");
 
         foreach($tests['data'] as $test)
         {
-            $profit = $profit + $test->test->cost;
+            $profit = $profit + $test['test']['cost'];
         }
 
         $results = [];
-        $results['tests'] = $tests;
+        $results['tests'] = $tests['data'];
         $results['profit'] = $profit;
 
         return $results;
@@ -145,18 +145,18 @@ class GetBalance
     public static function GetGrantsLoses(Request $request,$from_date,$to_date)
     {
         $loses = 0;
-        $grants = Http::withToken($request->bearerToken())->get("http://localhost:8002/api/grants/report",[
+        $grants = Http::withToken($request->bearerToken())->withBody(json_encode([
             'from_date'=>$from_date,
-            'to_date'=>$to_date,
-        ]);
+            'to_date'=>$to_date
+        ]),'application/json')->get("http://localhost:8002/api/grants/report");
 
-        foreach($grants as $grant)
+        foreach($grants['data'] as $grant)
         {
-            $loses = $loses + $grant->amount;
+            $loses = $loses + $grant['amount'];
         }
 
         $result = [];
-        $result['grants'] = $grants;
+        $result['grants'] = $grants['data'];
         $result['lose'] = $loses;
 
         return $result;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InsuranceDebtController;
 use App\Http\Controllers\Organization_deptsController;
@@ -95,6 +96,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/punishments',[PunishmentsController::class,'GetAllPunishments']);
     Route::get('/punishments/report',[PunishmentsController::class,'PunishmentsReport']);
     Route::get('/punishments/{id}',[PunishmentsController::class,'GetPunishment']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/balance',[BalanceController::class,'GetBalance']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
