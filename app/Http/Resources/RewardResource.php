@@ -18,6 +18,7 @@ class RewardResource extends JsonResource
             'id'=>$this->id,
             'amount'=>$this->amount,
             'date'=>$this->date,
+            'reason'=>$this->reason,
             'staff'=>new RewardStaffResource($this->staff),
         ];
     }
