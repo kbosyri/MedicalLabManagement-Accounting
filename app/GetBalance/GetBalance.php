@@ -43,10 +43,14 @@ class GetBalance
     public static function GetPatientTestsProfit(Request $request,$from_date,$to_date)
     {
         $profit = 0;
+        $url = sprintf("http://%s:%s/api/reports/patients/tests"
+                        ,env("MEDICAL_LAB_MANAGEMENT_TESTS_HOST")
+                        ,env("MEDICAL_LAB_MANAGEMENT_TESTS_PORT"));
+
         $tests = Http::withToken($request->bearerToken())->withBody(json_encode([
             'start_date'=>$from_date,
             'end_date'=>$to_date
-        ]),"application/json")->get("http://localhost:8000/api/reports/patients/tests");
+        ]),"application/json")->get($url);
 
         foreach($tests['data'] as $test)
         {
@@ -145,10 +149,14 @@ class GetBalance
     public static function GetGrantsLoses(Request $request,$from_date,$to_date)
     {
         $loses = 0;
+        $url = sprintf("http://%s:%s/api/grants/report"
+                            ,env("MEDICAL_LAB_MANAGEMENT_HR_HOST")
+                            ,env("MEDICAL_LAB_MANAGEMENT_HR_PORT"));
+
         $grants = Http::withToken($request->bearerToken())->withBody(json_encode([
             'from_date'=>$from_date,
             'to_date'=>$to_date
-        ]),'application/json')->get("http://localhost:8002/api/grants/report");
+        ]),'application/json')->get($url);
 
         foreach($grants['data'] as $grant)
         {
