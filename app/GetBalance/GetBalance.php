@@ -184,11 +184,10 @@ class GetBalance
 
         $result['patient_debts_loses'] = GetBalance::GetPatientDebtsLoses($from_date,$to_date);
         $result['insurance_debts_loses'] = GetBalance::GetInsuranceDebtsLoses($from_date,$to_date);
-        $results['organization_debts_loses'] = GetBalance::GetOrganizationDebtsLoses($from_date,$to_date);
-
+        $result['organization_debts_loses'] = GetBalance::GetOrganizationDebtsLoses($from_date,$to_date);
         $result['total_loses'] = $result['patient_debts_loses']['lose'] 
                                     + $result['insurance_debts_loses']['lose'] 
-                                    + $results['organization_debts_loses']['lose'];
+                                    + $result['organization_debts_loses']['lose'];
         
         return $result;
     }
