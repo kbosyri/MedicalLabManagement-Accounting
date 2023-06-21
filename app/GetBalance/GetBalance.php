@@ -3,12 +3,18 @@
 namespace App\GetBalance;
 
 use App\Http\Resources\Expenses\ExpenseResource;
+use App\Http\Resources\Insurance\MainInsuranceDebtResource;
+use App\Http\Resources\Organization\MainOrganizationDebtResource;
+use App\Http\Resources\Patients\MainPatientDebtResource;
 use App\Http\Resources\Punishments\PunishmentResource;
 use App\Http\Resources\StaffResource;
 use App\Models\PatientTest;
 use App\Models\Punishment;
 use Illuminate\Support\Facades\Http;
 use App\Models\Expense;
+use App\Models\InsuranceDebt;
+use App\Models\OrganizationDebt;
+use App\Models\PatientDebt;
 use App\Models\Reward;
 use App\Models\Staff;
 use Illuminate\Http\Request;
@@ -87,10 +93,12 @@ class GetBalance
         $total_loses['salary_loses'] = GetBalance::GetSalaryLoses();
         $total_loses['rewards_loses'] = GetBalance::GetRewardsLoses($from_date,$to_date);
         $total_loses['grant_loses'] = GetBalance::GetGrantsLoses($request,$from_date,$to_date);
+        $total_loses['debts_loses'] = GetBalance::GetDebtLoses($from_date,$to_date);
         $total_loses['total_loses'] = $total_loses['expense_loses']['lose'] 
                                         + $total_loses['salary_loses']['lose']
                                         + $total_loses['rewards_loses']['lose']
-                                        + $total_loses['grant_loses']['lose'];
+                                        + $total_loses['grant_loses']['lose']
+                                        + $total_loses['debts_loses']['total_loses'];
 
         return $total_loses;
     }
@@ -165,6 +173,72 @@ class GetBalance
 
         $result = [];
         $result['grants'] = $grants['data'];
+        $result['lose'] = $loses;
+
+        return $result;
+    }
+
+    public static function GetDebtLoses($from_date,$to_date)
+    {
+        $result = [];
+
+        $result['patient_debts_loses'] = GetBalance::GetPatientDebtsLoses($from_date,$to_date);
+        $result['insurance_debts_loses'] = GetBalance::GetInsuranceDebtsLoses($from_date,$to_date);
+        $results['organization_debts_loses'] = GetBalance::GetOrganizationDebtsLoses($from_date,$to_date);
+
+        $result['total_loses'] = $result['patient_debts_loses']['lose'] 
+                                    + $result['insurance_debts_loses']['lose'] 
+                                    + $results['organization_debts_loses']['lose'];
+        
+        return $result;
+    }
+
+    public static function GetPatientDebtsLoses($from_date,$to_date)
+    {
+        $loses = 0;
+        $debts = PatientDebt::whereBetween('date',[$from_date,$to_date])->get();
+
+        foreach($debts as $debt)
+        {
+            $loses = $loses + $debt->amount;
+        }
+
+        $result = [];
+        $result['debts'] = MainPatientDebtResource::collection($debts);
+        $result['lose'] = $loses;
+
+        return $result;
+    }
+
+    public static function GetInsuranceDebtsLoses($from_date,$to_date)
+    {
+        $loses = 0;
+        $debts = InsuranceDebt::whereBetween('date',[$from_date,$to_date])->get();
+
+        foreach($debts as $debt)
+        {
+            $loses = $loses + $debt->amount;
+        }
+
+        $result = [];
+        $result['debts'] = MainInsuranceDebtResource::collection($debts);
+        $result['lose'] = $loses;
+
+        return $result;
+    }
+
+    public static function GetOrganizationDebtsLoses($from_date,$to_date)
+    {
+        $loses = 0;
+        $debts = OrganizationDebt::whereBetween('date',[$from_date,$to_date])->get();
+
+        foreach($debts as $debt)
+        {
+            $loses = $loses + $debt->amount;
+        }
+
+        $result = [];
+        $result['debts'] = MainOrganizationDebtResource::collection($debts);
         $result['lose'] = $loses;
 
         return $result;
