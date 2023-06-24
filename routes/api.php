@@ -100,6 +100,18 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/balance',[BalanceController::class,'GetBalance']);
+    Route::get('/balance/profits',[BalanceController::class,'GetProfit']);
+    Route::get('/balance/profits/tests',[BalanceController::class,'GetPatientTestsProfit']);
+    Route::get('/balance/profits/punishments',[BalanceController::class,'GetPunishmentsProfit']);
+    Route::get('/balance/loses',[BalanceController::class,'GetLoses']);
+    Route::get('/balance/loses/salaries',[BalanceController::class,'GetSalaryLoses']);
+    Route::get('/balance/loses/expenses',[BalanceController::class,'GetExpeseLoses']);
+    Route::get('/balance/loses/rewards',[BalanceController::class,'GetRewardsLoses']);
+    Route::get('/balance/loses/grants',[BalanceController::class,'GetGrantsLoses']);
+    Route::get('/balance/loses/debts',[BalanceController::class,'GetDebtLoses']);
+    Route::get('/balance/loses/debts/patients',[BalanceController::class,'GetPatientDebtsLoses']);
+    Route::get('/balance/loses/debts/insurances',[BalanceController::class,'GetInsuranceDebtsLoses']);
+    Route::get('/balance/loses/debts/organizations',[BalanceController::class,'GetOrganizationDebtsLoses']);
 });
 
 /*Route::get('/allaccounts',[Organization_deptsController::class,'allaccounts']);
