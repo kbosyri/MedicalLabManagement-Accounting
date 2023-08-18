@@ -14,6 +14,13 @@ class AddRewardRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if(Auth::user()->role)
+        {
+            if(Auth::user()->role->finance)
+            {
+                return true;
+            }
+        }
         return Auth::user()->is_admin;
     }
 
