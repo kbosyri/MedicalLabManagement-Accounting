@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Debts\AddPatientDebtRequest;
+use App\Http\Requests\Debts\PayPatientDebtRequest;
+use App\Http\Requests\Debts\UpdatePatientDebtRequest;
 use App\Http\Resources\Patients\MainPatientDebtResource;
 use App\Http\Resources\Patients\PatientResource;
 use App\Models\Patient;
@@ -23,7 +26,7 @@ class PatientDebtsController extends Controller
         return false;
     }
 
-    public function AddPatientDebt(Request $request)
+    public function AddPatientDebt(AddPatientDebtRequest $request)
     {
         $new = new PatientDebt();
 
@@ -39,7 +42,7 @@ class PatientDebtsController extends Controller
         ]);
     }
 
-    public function UpdatePatientDebt(Request $request, $id)
+    public function UpdatePatientDebt(UpdatePatientDebtRequest $request, $id)
     {
         $debt = PatientDebt::find($id);
 
@@ -55,7 +58,7 @@ class PatientDebtsController extends Controller
         ]);
     }
 
-    public function PayDebts(Request $request)
+    public function PayDebts(PayPatientDebtRequest $request)
     {
         PatientDebt::whereIn('id',$request->patient_debts)->update(['is_paid'=>true]);
 

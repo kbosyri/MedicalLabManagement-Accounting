@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Debts\AddOrganizationDebtRequest;
+use App\Http\Requests\Debts\PayOrganizationDebtRequest;
+use App\Http\Requests\Debts\UpdateOrganizationDebtRequest;
 use App\Models\OrganizationDebt;
 use Illuminate\Http\Request;
 use App\Http\Resources\Functionalaccount;
@@ -41,7 +44,7 @@ class Organization_deptsController extends Controller
     }
 
 
-    public function AddOrganizationDebt(Request $request)
+    public function AddOrganizationDebt(AddOrganizationDebtRequest $request)
     {
 
         $funaccount = new OrganizationDebt();
@@ -61,7 +64,7 @@ class Organization_deptsController extends Controller
 
 
 
-    public function UpdateOrganizationDebt(Request $request,$id)
+    public function UpdateOrganizationDebt(UpdateOrganizationDebtRequest $request,$id)
     {
 
         $funaccount = OrganizationDebt::find($id);
@@ -78,7 +81,7 @@ class Organization_deptsController extends Controller
 
     }
 
-    public function payDebts(Request $request)
+    public function payDebts(PayOrganizationDebtRequest $request)
     {
         OrganizationDebt::whereIn('id',$request->organization_debts)->update(['is_paid'=>true]);
         

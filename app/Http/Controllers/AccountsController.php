@@ -47,7 +47,7 @@ class AccountsController extends Controller
         ]);
     }
 
-    public function UpdateOrganization(Request $request, $id)
+    public function UpdateOrganization(AccountAddRequest $request, $id)
     {
         $organization = Organization::find($id);
 
@@ -64,7 +64,7 @@ class AccountsController extends Controller
         ]);
     }
 
-    public function UpdateInsurance(Request $request, $id)
+    public function UpdateInsurance(AccountAddRequest $request, $id)
     {
         $insurance = Insurance::find($id);
 

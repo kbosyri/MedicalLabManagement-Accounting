@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Debts\AddInsuranceDebtRequest;
+use App\Http\Requests\Debts\PayInsuranceDebtRequest;
+use App\Http\Requests\Debts\UpdateInsuranceDebtRequest;
 use App\Http\Resources\Insurance\InsuranceResource;
 use App\Http\Resources\Insurance\MainInsuranceDebtResource;
 use App\Models\Insurance;
@@ -23,7 +26,7 @@ class InsuranceDebtController extends Controller
         return false;
     }
 
-    public function AddInsuranceDebt(Request $request)
+    public function AddInsuranceDebt(AddInsuranceDebtRequest $request)
     {
         $debt = new InsuranceDebt();
 
@@ -39,7 +42,7 @@ class InsuranceDebtController extends Controller
         ]);
     }
 
-    public function UpdateInsuranceDebt(Request $request, $id)
+    public function UpdateInsuranceDebt(UpdateInsuranceDebtRequest $request, $id)
     {
         $debt = InsuranceDebt::find($id);
 
@@ -54,7 +57,7 @@ class InsuranceDebtController extends Controller
         ]);
     }
 
-    public function payDebts(Request $request)
+    public function payDebts(PayInsuranceDebtRequest $request)
     {
         InsuranceDebt::whereIn('id',$request->insurance_debts)->update(['is_paid'=>true]);
 

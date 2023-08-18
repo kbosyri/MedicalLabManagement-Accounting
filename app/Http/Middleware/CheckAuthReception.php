@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAuth
+class CheckAuthReception
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        error_log("check-auth");
+        error_log("check-auth-reception");
         if(Auth::user()->role)
         {
             error_log("role");
@@ -26,7 +26,7 @@ class CheckAuth
                 return response()->json(['message'=>'المستخدم غير مسموح له باستخدام هذا الرابط'],403);
             }
         }
-        else if(!Auth::user()->is_admin)
+        else if(!Auth::user()->is_admin && !Auth::user()->is_reception)
         {
             error_log("admin check");
             return response()->json([
