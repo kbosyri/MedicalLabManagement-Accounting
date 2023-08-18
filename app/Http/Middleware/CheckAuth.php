@@ -16,8 +16,16 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::user()->is_admin)
+        if(Auth::user()->role)
         {
+            if(!Auth::user()->role->finance)
+            {
+                return response()->json(['message'=>'المستخدم غير مسموح له باستخدام هذا الرابط'],403);
+            }
+        }
+        else if(!Auth::user()->is_admin)
+        {
+            error_log("admin check");
             return response()->json([
                 'message'=>'المستخدم غير مسموح له باستعمال هذا الرابط'
             ],403);
